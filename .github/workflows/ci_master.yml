@@ -1,0 +1,56 @@
+#------------------------------------
+# Github Actions CI/CD
+#
+# Copyleft (C) by Ilya Furman 2022.
+#------------------------------------
+
+name: GithubActions-CI-CD
+  
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "master" and "develop" branch
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+  # Allows run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+
+jobs:
+  test:
+    name: Test Master
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
+      - name: Install dependencies
+        run: |
+          cd $GITHUB_WORKSPACE
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - name: Run Tests    
+        run: python -m unittest test
+      - name: Telegram Notification
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_CHAT_ID }}
+          token: ${{ secrets.TELEGRAM_TOKEN }}
+          args: |
+            Статус тестирования недавно внесенных обновлений при ${{ github.event_name }} на ветку ${{ github.ref_name }}: ${{ job.status }}
+  
+  deploy-master:
+    name: Deploy Master
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    needs: test
+    if: github.ref == 'refs/heads/master' && (github.event_name == 'push' || github.event_name == 'pull_request')
+    steps:
+      - name: Deploy master
+        run: echo "Deploying master"
+  
+  
