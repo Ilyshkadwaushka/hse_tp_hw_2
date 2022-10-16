@@ -38,5 +38,6 @@
 ![Chart](https://github.com/Ilyshkadwaushka/hse_tp_hw_2/raw/master/images/chart.png)
 
 <br/>
+
 **Автор работы:** Фурман Илья Дмитриевич <br/>
 **Группа:** ББИ223
