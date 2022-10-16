@@ -36,3 +36,7 @@
 
 ### График зависимости времени выполнения функций `_sum` и `_mult` от кол-ва чисел в файле:<br/>
 ![Chart](https://github.com/Ilyshkadwaushka/hse_tp_hw_2/raw/master/images/chart.png)
+
+<br/>
+**Автор работы:** Фурман Илья Дмитриевич <br/>
+**Группа:** ББИ223
