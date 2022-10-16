@@ -22,9 +22,9 @@ class TestMethods(unittest.TestCase):
     def test_mult_function(self):
         self.assertEqual(self.methods._mult()['result'], reduce(lambda x,y: x*y, self.data()))
 
-    @unittest.expectedFailure
+    # Own test
     def test_failure_sum_function(self):
-        self.assertEqual(self.methods._sum()['result'], -1)
+        self.assertIsNot(type(self.methods._sum()['result']), str)
 
 if __name__ == '__main__':
     unittest.main()
